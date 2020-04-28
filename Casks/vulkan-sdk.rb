@@ -10,13 +10,14 @@ cask 'vulkan-sdk' do
 
   #==============================
 
-  VK_BIN       = "#{staged_path}/macOS/bin"
-  VK_LIB       = "#{staged_path}/macOS/lib"
-  VK_INCLUDE   = "#{staged_path}/macOS/include/vulkan"
-  MVK_INCLUDE  = "#{staged_path}/MoltenVK/include/MoltenVK"
-  PORT_INCLUDE = "#{staged_path}/MoltenVK/include/vulkan-portability"
-  VK_ICD       = "#{staged_path}/macOS/etc/vulkan/icd.d"
-  VK_LAYER     = "#{staged_path}/macOS/etc/vulkan/explicit_layer.d"
+  VK_BIN        = "#{staged_path}/macOS/bin"
+  VK_LIB        = "#{staged_path}/macOS/lib"
+  VK_INCLUDE    = "#{staged_path}/macOS/include/vulkan"
+  MVK_INCLUDE   = "#{staged_path}/MoltenVK/include/MoltenVK"
+  PORT_INCLUDE  = "#{staged_path}/MoltenVK/include/vulkan-portability"
+  VK_ICD        = "#{staged_path}/macOS/etc/vulkan/icd.d"
+  VK_LAYER      = "#{staged_path}/macOS/etc/vulkan/explicit_layer.d"
+  VK_FRAMEWORKS = "#{staged_path}/MoltenVK/macOS/frameworks"
 
   DEST_BIN           = "/usr/local/bin"
   DEST_LIB           = "/usr/local/lib"
@@ -161,17 +162,6 @@ cask 'vulkan-sdk' do
     end
   end
 
-  def caveats
-    <<~EOS
-      MoltenVK.framework was installed to:
-        #{frameworks}/MoltenVK.framework
-
-      You may want to symlink this Framework to a standard macOS location,
-      such as:
-        ln -s "#{frameworks}/MoltenVK.framework" /Library/Frameworks
-    EOS
-  end
-
   uninstall delete: DEST_INCLUDE
   uninstall delete: DEST_INCLUDE_MVK
   uninstall delete: DEST_INCLUDE_PORT
@@ -200,6 +190,15 @@ cask 'vulkan-sdk' do
 
   caveats do
     license 'https://vulkan.lunarg.com/sdk/home#sdk-license'
+    
+    <<~EOS
+      MoltenVK.framework was installed to:
+        #{VK_FRAMEWORKS}/MoltenVK.framework
+
+      You may want to symlink this Framework to a standard macOS location,
+      such as:
+        ln -s "#{VK_FRAMEWORKS}/MoltenVK.framework" /Library/Frameworks
+    EOS
   end
 
 end

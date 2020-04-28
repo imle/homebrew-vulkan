@@ -10,14 +10,14 @@ cask 'vulkan-sdk' do
 
   #==============================
 
-  VK_BIN        = "#{staged_path}/macOS/bin"
-  VK_LIB        = "#{staged_path}/macOS/lib"
-  VK_INCLUDE    = "#{staged_path}/macOS/include/vulkan"
-  MVK_INCLUDE   = "#{staged_path}/MoltenVK/include/MoltenVK"
-  PORT_INCLUDE  = "#{staged_path}/MoltenVK/include/vulkan-portability"
-  VK_ICD        = "#{staged_path}/macOS/etc/vulkan/icd.d"
-  VK_LAYER      = "#{staged_path}/macOS/etc/vulkan/explicit_layer.d"
-  VK_FRAMEWORKS = "#{staged_path}/MoltenVK/macOS/frameworks"
+  VK_BIN       = "#{staged_path}/macOS/bin"
+  VK_LIB       = "#{staged_path}/macOS/lib"
+  VK_INCLUDE   = "#{staged_path}/macOS/include/vulkan"
+  MVK_INCLUDE  = "#{staged_path}/MoltenVK/include/MoltenVK"
+  PORT_INCLUDE = "#{staged_path}/MoltenVK/include/vulkan-portability"
+  VK_ICD       = "#{staged_path}/macOS/etc/vulkan/icd.d"
+  VK_LAYER     = "#{staged_path}/macOS/etc/vulkan/explicit_layer.d"
+  VK_FRAMEWORK = "#{staged_path}/MoltenVK/macOS/framework"
 
   DEST_BIN           = "/usr/local/bin"
   DEST_LIB           = "/usr/local/lib"

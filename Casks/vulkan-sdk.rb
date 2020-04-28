@@ -193,11 +193,11 @@ cask 'vulkan-sdk' do
     
     <<~EOS
       MoltenVK.framework was installed to:
-        #{VK_FRAMEWORKS}/MoltenVK.framework
+        #{VK_FRAMEWORK}/MoltenVK.framework
 
       You may want to symlink this Framework to a standard macOS location,
       such as:
-        ln -s "#{VK_FRAMEWORKS}/MoltenVK.framework" /Library/Frameworks
+        ln -s "#{VK_FRAMEWORK}/MoltenVK.framework" /Library/Frameworks
     EOS
   end
 

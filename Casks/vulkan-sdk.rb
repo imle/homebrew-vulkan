@@ -10,14 +10,13 @@ cask 'vulkan-sdk' do
 
   #==============================
 
-  VK_BIN        = "#{staged_path}/macOS/bin"
-  VK_LIB        = "#{staged_path}/macOS/lib"
-  VK_INCLUDE    = "#{staged_path}/macOS/include/vulkan"
-  MVK_INCLUDE   = "#{staged_path}/MoltenVK/include/MoltenVK"
-  PORT_INCLUDE  = "#{staged_path}/MoltenVK/include/vulkan-portability"
-  VK_ICD        = "#{staged_path}/macOS/etc/vulkan/icd.d"
-  VK_LAYER      = "#{staged_path}/macOS/etc/vulkan/explicit_layer.d"
-  VK_FRAMEWORKS = "#{staged_path}/MoltenVK/macOS/framework"
+  VK_BIN       = "#{staged_path}/macOS/bin"
+  VK_LIB       = "#{staged_path}/macOS/lib"
+  VK_INCLUDE   = "#{staged_path}/macOS/include/vulkan"
+  MVK_INCLUDE  = "#{staged_path}/MoltenVK/include/MoltenVK"
+  PORT_INCLUDE = "#{staged_path}/MoltenVK/include/vulkan-portability"
+  VK_ICD       = "#{staged_path}/macOS/etc/vulkan/icd.d"
+  VK_LAYER     = "#{staged_path}/macOS/etc/vulkan/explicit_layer.d"
 
   DEST_BIN           = "/usr/local/bin"
   DEST_LIB           = "/usr/local/lib"
@@ -26,7 +25,6 @@ cask 'vulkan-sdk' do
   DEST_INCLUDE_PORT  = "/usr/local/include/vulkan-portability"
   DEST_ICD           = "/usr/local/share/vulkan/icd.d"
   DEST_LAYER         = "/usr/local/share/vulkan/explicit_layer.d"
-  DEST_FRAMEWORK     = "/Library/Frameworks"
   
   mylist = version.split(".")
   lib_version = mylist[0] + "." + mylist[1] + "." + mylist[2]
@@ -117,9 +115,6 @@ cask 'vulkan-sdk' do
     FileUtils.ln_sf "#{VK_LIB}/libVkLayer_thread_safety.dylib",         DEST_LIB
     FileUtils.ln_sf "#{VK_LIB}/libVkLayer_unique_objects.dylib",        DEST_LIB
     
-    #VULKAN Framework
-    FileUtils.ln_sf "#{VK_FRAMEWORKS}/MoltenVK.framework",  "#{DEST_FRAMEWORK}/MoltenVK.framework"
-    
     #VULKAN ICD FOR MACOS
     #===============================================    
     FileUtils.mkdir_p(DEST_ICD) unless Dir.exist?(DEST_ICD)
@@ -166,6 +161,17 @@ cask 'vulkan-sdk' do
     end
   end
 
+  def caveats
+    <<~EOS
+      MoltenVK.framework was installed to:
+        #{frameworks}/MoltenVK.framework
+
+      You may want to symlink this Framework to a standard macOS location,
+      such as:
+        ln -s "#{frameworks}/MoltenVK.framework" /Library/Frameworks
+    EOS
+  end
+
   uninstall delete: DEST_INCLUDE
   uninstall delete: DEST_INCLUDE_MVK
   uninstall delete: DEST_INCLUDE_PORT
@@ -187,8 +193,7 @@ cask 'vulkan-sdk' do
                       "#{DEST_LIB}/libVkLayer_object_lifetimes.dylib",
                       "#{DEST_LIB}/libVkLayer_stateless_validation.dylib",
                       "#{DEST_LIB}/libVkLayer_thread_safety.dylib",
-                      "#{DEST_LIB}/libVkLayer_unique_objects.dylib",
-                      "#{DEST_FRAMEWORK}/MoltenVK.framework"
+                      "#{DEST_LIB}/libVkLayer_unique_objects.dylib"
                     ]
 
   uninstall delete: '/usr/local/share/vulkan'
